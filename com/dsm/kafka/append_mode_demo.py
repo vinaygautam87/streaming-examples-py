@@ -34,7 +34,7 @@ if __name__ == '__main__':
     inputDf = spark\
         .readStream\
         .format("kafka")\
-        .option("kafka.bootstrap.servers", "ec2-3-249-27-66.eu-west-1.compute.amazonaws.com:9092")\
+        .option("kafka.bootstrap.servers", "ec2-34-248-165-148.eu-west-1.compute.amazonaws.com:9092")\
         .option("subscribe", "test")\
         .option("startingOffsets", "earliest") \
         .load()
