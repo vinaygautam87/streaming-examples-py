@@ -49,5 +49,4 @@ if __name__ == '__main__':
         .start()\
         .awaitTermination()
 
-
-    # spark-submit --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0" com/dsm/kafka/append_mode_demo.py
+# spark-submit --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0" com/dsm/kafka/append_mode_demo.py
