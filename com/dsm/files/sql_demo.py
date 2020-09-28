@@ -54,7 +54,7 @@ if __name__ == '__main__':
 
     crime_per_cat_df = category_df.groupBy("major_category")\
         .agg(_sum("value").alias("convictions"))\
-        .orderBy("convictions")
+        .orderBy(desc("convictions"))
 
     query = crime_per_cat_df.writeStream\
         .outputMode("complete")\
