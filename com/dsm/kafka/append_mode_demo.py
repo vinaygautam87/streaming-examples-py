@@ -44,8 +44,7 @@ if __name__ == '__main__':
         .writeStream\
         .outputMode("append")\
         .format("console") \
-        .option("checkpointLocation",
-                "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["kafka"]["checkpoint_dir"]) \
+        .option("checkpointLocation", "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["kafka"]["checkpoint_dir"]) \
         .start()\
         .awaitTermination()
 

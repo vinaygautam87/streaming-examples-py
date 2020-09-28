@@ -5,5 +5,5 @@ files:
     directory: droplocation
 
 kafka:
-  topic: test
+  topic: test2
   checkpoint_dir: chk_pnt
