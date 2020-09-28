@@ -44,9 +44,10 @@ if __name__ == '__main__':
         .writeStream\
         .outputMode("append")\
         .format("console") \
+        .option("checkpointLocation",
+                "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["kafka"]["checkpoint_dir"]) \
         .start()\
         .awaitTermination()
 
-# .option("checkpointLocation", "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["kafka"]["checkpoint_dir"]) \
 
     # spark-submit --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0" com/dsm/kafka/append_mode_demo.py
