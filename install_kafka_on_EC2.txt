@@ -18,13 +18,15 @@ ctrl+d / ctrl+c
 sudo nohup bin/kafka-server-start.sh config/server.properties > ~/kafka-logs &
 ctrl+d / ctrl+c
 
-# tail -f zookeeper-logs /kafka-logs
-
 ### >>>Create a Topic<<<
 sudo bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 sudo bin/kafka-topics.sh --list --zookeeper <ip_or_dns>:2181
 
 sudo bin/kafka-console-producer.sh --broker-list <ip_or_dns>:9092 --topic test
+
+# Troubleshooting - Once Spark Job starts reading data from a topic, you should see a message like "Adding new member consumer-"
+# If not, check IP whitelisting
+tail -f ~/kafka-logs
 
 
 sudo bin/kafka-server-stop.sh

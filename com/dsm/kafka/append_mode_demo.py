@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 import os.path
+import yaml
 
 
 if __name__ == '__main__':
@@ -16,11 +17,20 @@ if __name__ == '__main__':
         .getOrCreate()
     spark.sparkContext.setLogLevel('ERROR')
 
+    current_dir = os.path.abspath(os.path.dirname(__file__))
+    app_config_path = os.path.abspath(current_dir + "/../../../" + "application.yml")
+    app_secrets_path = os.path.abspath(current_dir + "/../../../" + ".secrets")
+
+    conf = open(app_config_path)
+    app_conf = yaml.load(conf, Loader=yaml.FullLoader)
+    secret = open(app_secrets_path)
+    app_secret = yaml.load(secret, Loader=yaml.FullLoader)
+
     inputDf = spark\
         .readStream\
         .format("kafka")\
-        .option("kafka.bootstrap.servers", "ec2-3-249-27-66.eu-west-1.compute.amazonaws.com:9092")\
-        .option("subscribe", "test")\
+        .option("kafka.bootstrap.servers", app_secret["kafka"]["server"])\
+        .option("subscribe", app_conf["kafka"]["kafka"])\
         .option("startingOffsets", "earliest")\
         .load()
 
