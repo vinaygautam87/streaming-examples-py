@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession
 import yaml
 import os.path
-from pyspark.sql.functions import desc,sum as _sum
+from pyspark.sql.functions import desc, sum as _sum
 from pyspark.sql.types import *
 
 
