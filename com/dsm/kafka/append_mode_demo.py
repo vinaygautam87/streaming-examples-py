@@ -36,10 +36,10 @@ if __name__ == '__main__':
         .format("kafka")\
         .option("kafka.bootstrap.servers", "ec2-3-249-27-66.eu-west-1.compute.amazonaws.com:9092")\
         .option("subscribe", "test")\
+        .option("startingOffsets", "earliest") \
         .load()
         # .option("kafka.bootstrap.servers", app_secret["kafka"]["server"])\
         # .option("subscribe", app_conf["kafka"]["topic"])\
-        # .option("startingOffsets", "earliest") \
 
     consoleOutput = inputDf\
         .selectExpr("CAST(value AS STRING)")\

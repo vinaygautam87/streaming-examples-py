@@ -2,7 +2,6 @@ from pyspark.sql import SparkSession
 import yaml
 import os.path
 from pyspark.sql.functions import desc,explode, split,count
-from pyspark.sql.types import StructType,StructField, IntegerType, LongType,DoubleType,StringType,TimestampType
 
 
 if __name__ == '__main__':
