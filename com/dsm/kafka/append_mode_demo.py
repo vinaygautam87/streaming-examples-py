@@ -30,7 +30,7 @@ if __name__ == '__main__':
         .readStream\
         .format("kafka")\
         .option("kafka.bootstrap.servers", app_secret["kafka"]["server"])\
-        .option("subscribe", app_conf["kafka"]["kafka"])\
+        .option("subscribe", app_conf["kafka"]["topic"])\
         .option("startingOffsets", "earliest")\
         .load()
 
