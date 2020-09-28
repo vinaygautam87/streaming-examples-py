@@ -64,3 +64,4 @@ if __name__ == '__main__':
         .start()\
         .awaitTermination()
 
+# spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" com/dsm/files/sql_demo.py
