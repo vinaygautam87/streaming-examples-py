@@ -34,12 +34,10 @@ if __name__ == '__main__':
     inputDf = spark\
         .readStream\
         .format("kafka")\
-        .option("kafka.bootstrap.servers", "ec2-34-248-165-148.eu-west-1.compute.amazonaws.com:9092")\
-        .option("subscribe", "test")\
+        .option("kafka.bootstrap.servers", app_secret["kafka"]["server"] + ":9092")\
+        .option("subscribe", app_conf["kafka"]["topic"])\
         .option("startingOffsets", "earliest") \
         .load()
-        # .option("kafka.bootstrap.servers", app_secret["kafka"]["server"])\
-        # .option("subscribe", app_conf["kafka"]["topic"])\
 
     consoleOutput = inputDf\
         .selectExpr("CAST(value AS STRING)")\
