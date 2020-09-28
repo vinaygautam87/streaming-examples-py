@@ -32,7 +32,7 @@ if __name__ == '__main__':
     hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
 
-    data_path = "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/datasets/droplocation"
+    data_path = "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/droplocation"
 
     schema = StructType([
         StructField("city_code", StringType(), True) ,
@@ -66,3 +66,5 @@ if __name__ == '__main__':
         .option("numRows", 30)\
         .start()\
         .awaitTermination()
+
+# spark-submit --packages "org.apache.hadoop:hadoop-aws:2.7.4" com/dsm/files/append_mode_demo.py
