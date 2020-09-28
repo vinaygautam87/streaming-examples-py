@@ -1,10 +1,8 @@
 s3_conf:
   s3_bucket: test-tushar-test
 
-sftp_conf:
-    filetype: csv
-    delimiter: |
-    directory: /home/ubuntu/data
+files:
+    directory: droplocation
 
 mysql_conf:
   dbtable: testdb.TRANSACTIONSYNC

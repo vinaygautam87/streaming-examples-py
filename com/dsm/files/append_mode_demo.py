@@ -32,34 +32,33 @@ if __name__ == '__main__':
     hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
     hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
 
-    data_path = "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/droplocation"
+    data_path = "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["files"]["directory"]
 
     schema = StructType([
-        StructField("city_code", StringType(), True) ,
-        StructField("city", StringType(), True) ,
-        StructField("major_category", StringType(), True) ,
-        StructField("minor_category", StringType(), True) ,
-        StructField("value", StringType(), True) ,
-        StructField("year", StringType(), True) ,
-        StructField("month", StringType(), True) ])
+        StructField("city_code", StringType(), True),
+        StructField("city", StringType(), True),
+        StructField("major_category", StringType(), True),
+        StructField("minor_category", StringType(), True),
+        StructField("value", StringType(), True),
+        StructField("year", StringType(), True),
+        StructField("month", StringType(), True)])
 
-    fileStreamDF = spark.readStream \
+    raw_crime_df = spark.readStream \
         .option("header", "false") \
         .option("maxFilesPerTrigger", 2) \
         .schema(schema) \
         .csv(data_path)
 
-    print("Is the stream ready?" , fileStreamDF.isStreaming)
+    print("Is the stream ready?", raw_crime_df.isStreaming)
 
-    fileStreamDF.printSchema()
+    raw_crime_df.printSchema()
 
-    trimmedDF = fileStreamDF\
-        .filter("city = 'Southwark' and year='2011' ")\
+    crime_df = raw_crime_df\
         .select("city", "year", "month", "value")\
         .withColumnRenamed("value", "convictions")
 
     # OutputMode in which only the new rows in the streaming DataFrame/Dataset will be written to the sink.
-    query = trimmedDF.writeStream\
+    query = crime_df.writeStream\
         .outputMode("append")\
         .format("console")\
         .option("truncate", "false")\
