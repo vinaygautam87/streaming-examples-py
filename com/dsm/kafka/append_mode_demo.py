@@ -34,9 +34,11 @@ if __name__ == '__main__':
     inputDf = spark\
         .readStream\
         .format("kafka")\
-        .option("kafka.bootstrap.servers", app_secret["kafka"]["server"])\
-        .option("subscribe", app_conf["kafka"]["topic"])\
+        .option("kafka.bootstrap.servers", "ec2-3-249-27-66.eu-west-1.compute.amazonaws.com")\
+        .option("subscribe", "test2")\
         .load()
+        # .option("kafka.bootstrap.servers", app_secret["kafka"]["server"])\
+        # .option("subscribe", app_conf["kafka"]["topic"])\
         # .option("startingOffsets", "earliest") \
 
     consoleOutput = inputDf\
@@ -44,8 +46,9 @@ if __name__ == '__main__':
         .writeStream\
         .outputMode("append")\
         .format("console") \
-        .option("checkpointLocation", "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["kafka"]["checkpoint_dir"]) \
         .start()\
         .awaitTermination()
 
-# spark-submit --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0" com/dsm/kafka/append_mode_demo.py
+# .option("checkpointLocation", "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["kafka"]["checkpoint_dir"]) \
+
+    # spark-submit --packages "org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0" com/dsm/kafka/append_mode_demo.py
