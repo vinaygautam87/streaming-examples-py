@@ -62,6 +62,8 @@ if __name__ == '__main__':
     data_stream_transformed.writeStream\
         .outputMode("append")\
         .format("console")\
+        .option("checkpointLocation",
+                "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["kafka"]["json_checkpoint_dir"]) \
         .option("truncate", "false")\
         .option("numRows", 30)\
         .start()\

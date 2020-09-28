@@ -7,3 +7,4 @@ files:
 kafka:
   topic: test
   checkpoint_dir: chk_pnt
+  json_checkpoint_dir: chk_pnt
