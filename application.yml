@@ -6,3 +6,4 @@ files:
 
 kafka:
   topic: test
+  checkpoint_dir: chk_pnt

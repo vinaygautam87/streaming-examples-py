@@ -26,6 +26,11 @@ if __name__ == '__main__':
     secret = open(app_secrets_path)
     app_secret = yaml.load(secret, Loader=yaml.FullLoader)
 
+    # Setup spark to use s3 : OPTION 1
+    hadoop_conf = spark.sparkContext._jsc.hadoopConfiguration()
+    hadoop_conf.set("fs.s3a.access.key", app_secret["s3_conf"]["access_key"])
+    hadoop_conf.set("fs.s3a.secret.key", app_secret["s3_conf"]["secret_access_key"])
+
     inputDf = spark\
         .readStream\
         .format("kafka")\
@@ -38,7 +43,9 @@ if __name__ == '__main__':
         .selectExpr("CAST(value AS STRING)")\
         .writeStream\
         .outputMode("append")\
-        .format("console")\
+        .format("console") \
+        .option("checkpointLocation",
+                "s3a://" + app_conf["s3_conf"]["s3_bucket"] + "/" + app_conf["kafka"]["checkpoint_dir"]) \
         .start()\
         .awaitTermination()
 
