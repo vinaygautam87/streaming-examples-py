@@ -11,7 +11,6 @@ if __name__ == '__main__':
     spark = SparkSession \
         .builder \
         .appName("Read from enterprise applications") \
-        .master('local[*]') \
         .getOrCreate()
     spark.sparkContext.setLogLevel('ERROR')
 
